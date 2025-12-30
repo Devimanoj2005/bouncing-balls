@@ -1,13 +1,15 @@
-window.addEventListener("load", () => {
-  const canvas = document.querySelector("canvas");
+window.onload = function () {
+  const canvas = document.getElementById("gameCanvas");
   const ctx = canvas.getContext("2d");
   const ballCountText = document.getElementById("ballCount");
 
-  /* ---------- FIXED CANVAS SIZE ---------- */
-  canvas.width = canvas.parentElement.clientWidth;
+  /* ---- FORCE REAL CANVAS SIZE ---- */
+  canvas.width = canvas.offsetWidth;
   canvas.height = 520;
 
-  /* ---------- UTILITIES ---------- */
+  console.log("Canvas size:", canvas.width, canvas.height);
+
+  /* ---- UTILITIES ---- */
   function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
@@ -16,96 +18,73 @@ window.addEventListener("load", () => {
     return `rgb(${random(0,255)}, ${random(0,255)}, ${random(0,255)})`;
   }
 
-  /* ---------- BALL OBJECT ---------- */
-  function Ball(x, y, velX, velY, size, color) {
-    this.x = x;
-    this.y = y;
-    this.velX = velX;
-    this.velY = velY;
-    this.size = size;
-    this.color = color;
-  }
-
-  Ball.prototype.draw = function () {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-  };
-
-  Ball.prototype.update = function () {
-    if (this.x + this.size >= canvas.width || this.x - this.size <= 0) {
-      this.velX *= -1;
+  /* ---- BALL CLASS ---- */
+  class Ball {
+    constructor(x, y, vx, vy, size, color) {
+      this.x = x;
+      this.y = y;
+      this.vx = vx;
+      this.vy = vy;
+      this.size = size;
+      this.color = color;
     }
-    if (this.y + this.size >= canvas.height || this.y - this.size <= 0) {
-      this.velY *= -1;
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
     }
-    this.x += this.velX;
-    this.y += this.velY;
-  };
 
-  Ball.prototype.collisionDetect = function () {
-    for (let j = 0; j < balls.length; j++) {
-      if (this !== balls[j]) {
-        const dx = this.x - balls[j].x;
-        const dy = this.y - balls[j].y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < this.size + balls[j].size) {
-          this.color = balls[j].color = randomColor();
-        }
+    update() {
+      if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+        this.vx *= -1;
       }
-    }
-  };
-
-  /* ---------- BALLS ARRAY ---------- */
-  let balls = [];
-
-  /* ---------- CREATE INITIAL BALLS ---------- */
-  function createBalls(count) {
-    for (let i = 0; i < count; i++) {
-      const size = random(10, 20);
-      balls.push(
-        new Ball(
-          random(size, canvas.width - size),
-          random(size, canvas.height - size),
-          random(2, 5),
-          random(2, 5),
-          size,
-          randomColor()
-        )
-      );
+      if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+        this.vy *= -1;
+      }
+      this.x += this.vx;
+      this.y += this.vy;
     }
   }
 
-  createBalls(10);
+  /* ---- BALL STORAGE ---- */
+  const balls = [];
 
-  /* ---------- CLICK TO ADD BALL ---------- */
+  /* ---- CREATE FIRST BALL (TEST) ---- */
+  balls.push(
+    new Ball(
+      canvas.width / 2,
+      canvas.height / 2,
+      4,
+      3,
+      15,
+      "red"
+    )
+  );
+
+  /* ---- CLICK TO ADD BALL ---- */
   canvas.addEventListener("click", (e) => {
     const rect = canvas.getBoundingClientRect();
-    const size = random(10, 20);
-
     balls.push(
       new Ball(
         e.clientX - rect.left,
         e.clientY - rect.top,
-        random(2, 6),
-        random(2, 6),
-        size,
+        random(2, 5),
+        random(2, 5),
+        random(10, 20),
         randomColor()
       )
     );
   });
 
-  /* ---------- ANIMATION LOOP ---------- */
+  /* ---- LOOP ---- */
   function animate() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let ball of balls) {
       ball.draw();
       ball.update();
-      ball.collisionDetect();
     }
 
     ballCountText.textContent = `Balls: ${balls.length}`;
@@ -113,4 +92,4 @@ window.addEventListener("load", () => {
   }
 
   animate();
-});
+};
