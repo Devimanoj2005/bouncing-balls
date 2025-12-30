@@ -1,11 +1,15 @@
-/* ---------- RESET ---------- */
+/* =========================
+   GLOBAL RESET
+========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ---------- BODY ---------- */
+/* =========================
+   BODY
+========================= */
 body {
   min-height: 100vh;
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
@@ -16,7 +20,9 @@ body {
   color: #ffffff;
 }
 
-/* ---------- MAIN APP CONTAINER ---------- */
+/* =========================
+   APP CONTAINER
+========================= */
 .app {
   width: 95%;
   max-width: 1100px;
@@ -27,7 +33,9 @@ body {
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
 }
 
-/* ---------- HEADER ---------- */
+/* =========================
+   HEADER
+========================= */
 header {
   text-align: center;
   margin-bottom: 14px;
@@ -45,7 +53,9 @@ header p {
   opacity: 0.85;
 }
 
-/* ---------- STATUS BAR ---------- */
+/* =========================
+   STATUS BAR
+========================= */
 .status {
   display: flex;
   justify-content: space-between;
@@ -57,26 +67,49 @@ header p {
   margin-bottom: 14px;
 }
 
-/* ---------- CANVAS WRAPPER ---------- */
+/* =========================
+   CANVAS WRAPPER
+========================= */
 .canvas-wrapper {
-  background: #000;
+  background: black;
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.6);
 }
 
-/* ---------- CANVAS (IMPORTANT) ---------- */
+/* =========================
+   CANVAS (CRITICAL)
+========================= */
 canvas {
   display: block;
   width: 100%;
-  /* ❌ DO NOT set height here */
   background: black;
   cursor: crosshair;
+  /* ❌ DO NOT SET HEIGHT */
 }
 
-/* ---------- FOOTER ---------- */
+/* =========================
+   FOOTER
+========================= */
 footer {
   margin-top: 14px;
   text-align: center;
   font-size: 0.8rem;
+  opacity: 0.65;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  .status {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+}
