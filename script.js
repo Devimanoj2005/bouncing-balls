@@ -1,17 +1,12 @@
-// Canvas setup
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const ballCountText = document.getElementById("ballCount");
 
-// Resize canvas to match container
-function resizeCanvas() {
-  canvas.width = canvas.parentElement.clientWidth;
-  canvas.height = canvas.parentElement.clientHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
+/* ---- FIXED CANVAS SIZE ---- */
+canvas.width = 1000;
+canvas.height = 520;
 
-// Utility functions
+/* ---- UTILITIES ---- */
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -20,7 +15,7 @@ function randomColor() {
   return `rgb(${random(0,255)}, ${random(0,255)}, ${random(0,255)})`;
 }
 
-// Ball constructor
+/* ---- BALL OBJECT ---- */
 function Ball(x, y, velX, velY, size, color) {
   this.x = x;
   this.y = y;
@@ -30,7 +25,6 @@ function Ball(x, y, velX, velY, size, color) {
   this.color = color;
 }
 
-// Draw ball
 Ball.prototype.draw = function () {
   ctx.beginPath();
   ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -38,21 +32,19 @@ Ball.prototype.draw = function () {
   ctx.fill();
 };
 
-// Update movement
 Ball.prototype.update = function () {
   if (this.x + this.size >= canvas.width || this.x - this.size <= 0) {
-    this.velX = -this.velX;
+    this.velX *= -1;
   }
 
   if (this.y + this.size >= canvas.height || this.y - this.size <= 0) {
-    this.velY = -this.velY;
+    this.velY *= -1;
   }
 
   this.x += this.velX;
   this.y += this.velY;
 };
 
-// Collision detection
 Ball.prototype.collisionDetect = function () {
   for (let j = 0; j < balls.length; j++) {
     if (this !== balls[j]) {
@@ -67,59 +59,55 @@ Ball.prototype.collisionDetect = function () {
   }
 };
 
-// Balls array
+/* ---- BALLS ARRAY ---- */
 let balls = [];
 
-// Initial balls
-function createInitialBalls(count) {
-  for (let i = 0; i < count; i++) {
-    const size = random(10, 20);
-    const ball = new Ball(
+/* ---- CREATE INITIAL BALLS ---- */
+for (let i = 0; i < 10; i++) {
+  const size = random(10, 20);
+  balls.push(
+    new Ball(
       random(size, canvas.width - size),
       random(size, canvas.height - size),
-      random(-4, 4),
-      random(-4, 4),
+      random(-4, 4) || 2,
+      random(-4, 4) || 2,
       size,
       randomColor()
-    );
-    balls.push(ball);
-  }
+    )
+  );
 }
 
-createInitialBalls(10);
-
-// Add ball on click
+/* ---- CLICK TO ADD BALL ---- */
 canvas.addEventListener("click", (e) => {
   const rect = canvas.getBoundingClientRect();
 
   const size = random(10, 20);
-  const ball = new Ball(
-    e.clientX - rect.left,
-    e.clientY - rect.top,
-    random(-5, 5),
-    random(-5, 5),
-    size,
-    randomColor()
+  balls.push(
+    new Ball(
+      e.clientX - rect.left,
+      e.clientY - rect.top,
+      random(-5, 5) || 3,
+      random(-5, 5) || 3,
+      size,
+      randomColor()
+    )
   );
-
-  balls.push(ball);
 });
 
-// Animation loop
-function animate() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+/* ---- ANIMATION LOOP ---- */
+function loop() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  for (let i = 0; i < balls.length; i++) {
-    balls[i].draw();
-    balls[i].update();
-    balls[i].collisionDetect();
+  for (let ball of balls) {
+    ball.draw();
+    ball.update();
+    ball.collisionDetect();
   }
 
-  // Update UI ball count
   ballCountText.textContent = `Balls: ${balls.length}`;
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(loop);
 }
 
-animate();
+loop();
