@@ -2,31 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Bouncing Balls | Interactive Canvas</title>
+  <title>Bouncing Balls</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div class="app">
+
+    <!-- Header -->
     <header>
       <h1>Bouncing Balls</h1>
       <p>Interactive JavaScript Canvas Demo</p>
     </header>
 
+    <!-- Status Bar -->
     <div class="status">
       <span id="ballCount">Balls: 0</span>
       <span>Click inside the canvas to add balls</span>
     </div>
 
+    <!-- Canvas Area -->
     <div class="canvas-wrapper">
-      <canvas></canvas>
+      <canvas id="gameCanvas"></canvas>
     </div>
 
+    <!-- Footer -->
     <footer>
-      <p>Built with HTML • CSS • JavaScript</p>
+      <p>Built using HTML, CSS & JavaScript</p>
     </footer>
+
   </div>
 
+  <!-- Script -->
   <script src="main.js"></script>
 </body>
 </html>
