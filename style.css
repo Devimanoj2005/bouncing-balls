@@ -1,115 +1,61 @@
-/* =========================
-   GLOBAL RESET
-========================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* =========================
-   BODY
-========================= */
-body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #ffffff;
-}
-
-/* =========================
-   APP CONTAINER
-========================= */
-.app {
-  width: 95%;
-  max-width: 1100px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  border-radius: 18px;
-  padding: 20px 24px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
-}
-
-/* =========================
-   HEADER
-========================= */
-header {
-  text-align: center;
-  margin-bottom: 14px;
-}
-
-header h1 {
-  font-size: 2rem;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-
-header p {
-  margin-top: 6px;
-  font-size: 0.95rem;
-  opacity: 0.85;
-}
-
-/* =========================
-   STATUS BAR
-========================= */
-.status {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.35);
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  margin-bottom: 14px;
-}
-
-/* =========================
-   CANVAS WRAPPER
-========================= */
-.canvas-wrapper {
-  background: black;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.6);
-}
-
-/* =========================
-   CANVAS (CRITICAL)
-========================= */
-canvas {
-  display: block;
-  width: 100%;
-  background: black;
-  cursor: crosshair;
-  /* ❌ DO NOT SET HEIGHT */
-}
-
-/* =========================
-   FOOTER
-========================= */
-footer {
-  margin-top: 14px;
-  text-align: center;
-  font-size: 0.8rem;
-  opacity: 0.65;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 1.6rem;
+html, body {
+    margin: 0;
   }
-
-  .status {
-    flex-direction: column;
-    gap: 6px;
+  
+  html {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+  }
+  
+  body {
+    overflow: hidden;
+    height: inherit;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    letter-spacing: -1px;
+    position: absolute;
     text-align: center;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: transparent;
+    text-shadow: 0 0 4px white;
   }
-}
+  .count {
+    position: absolute;
+    margin: 0;
+    top: 35px;
+    right: 5px;
+    color: #dbcdcd;
+  }
+  .m1 {
+    position: absolute;
+    margin: 0;
+    top: 50px;
+    right: 5px;
+    color: #aaa;
+  }
+  .m2 {
+    position: absolute;
+    margin: 0;
+    top: 65px;
+    right: 5px;
+    color: #aaa;
+  }
+  .m3 {
+    position: absolute;
+    margin: 0;
+    top: 80px;
+    right: 5px;
+    color: #aaa;
+  }
+  .m4 {
+    position: absolute;
+    margin: 0;
+    top: 95px;
+    right: 5px;
+    color: #aaa;
+  }
